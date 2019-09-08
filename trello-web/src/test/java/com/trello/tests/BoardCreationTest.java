@@ -17,11 +17,17 @@ public void testCreationBoard() throws InterruptedException {
     typeTextInField(boardName);
     choosePictureForNewBoard();
     createNewBoardButton_2();
+    String createdBoardName = getBoardNameFromBoardPage();
   //  isBoardIsCreated();
     returnToHomePage();
     int after = boardsCount();
     Assert.assertEquals(after,before+1);
+    Assert.assertEquals(createdBoardName,boardName);
 }
+
+    private String getBoardNameFromBoardPage() {
+        return driver.findElement(By.cssSelector("[class='js-board-editing-target board-header-btn-text']")).getText();
+    }
 
     private int boardsCount() {
       return driver.findElements(By.xpath("//ul[@class='boards-page-board-section-list']//li")).size();
