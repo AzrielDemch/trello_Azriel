@@ -49,4 +49,79 @@ public class TestBase {
         driver.quit();
     }
 
+    public void createNewBoardButton_2() {
+        click(By.cssSelector("[type='button']"));
+    }
+
+    public void choosePictureForNewBoard() {
+        driver.findElement(By.cssSelector("[style='background-image: url(\"https://images.unsplash.com/photo-1567788150222-c580695fa1d7?ixlib=rb-1.2" +
+                ".1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjcwNjZ9\");']")).click();
+    }
+
+    public void typeTextInField(String text) {
+        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).sendKeys(text);
+    }
+
+    public void clearField() {
+        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).clear();
+    }
+
+    public void addBoardTitleField() {
+        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).click();
+    }
+
+    public void createNewBoardButton() {
+        driver.findElement(By.cssSelector("[data-test-id='header-boards-menu-create-board']")).click();
+    }
+
+    public void clickOnBoardsButton() {
+        driver.findElement(By.cssSelector("[class='MEu8ZECLGMLeab']")).click();
+    }
+
+    public boolean isUserLoggedIn() {
+        return isElementPresent(By.name("board"));
+    }
+
+    public boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
+    public void clickContinueButton() {
+        click(By.cssSelector("[type='submit']"));
+    }
+
+    public void fillTeamCreationForm(String teamName, String description) {
+        driver.findElement(By.cssSelector("[data-test-id='header-create-team-name-input']")).click();
+        driver.findElement(By.cssSelector("[data-test-id='header-create-team-name-input']")).clear();
+        type(By.cssSelector("[data-test-id='header-create-team-name-input']"),teamName);
+        driver.findElement(By.cssSelector("textarea")).click();
+        driver.findElement(By.cssSelector("textarea")).clear();
+        type(By.cssSelector("textarea"),description);
+    }
+
+    public void selectCreateTeamFromDropDown() {
+        click(By.cssSelector("[data-test-id='header-create-team-button']"));
+    }
+
+    public void clickOnPlusButtonOnHeader() {
+        click(By.cssSelector("[data-test-id='header-create-menu-button']"));
+    }
+
+    public String getTeamNameFromTeamPage() {
+        return driver.findElement(By.cssSelector("h1")).getText();
+    }
+
+    public void returnToHomePage() throws InterruptedException {
+        click(By.cssSelector("[href='/']"));
+        click(By.cssSelector("[href='/']"));
+        Thread.sleep(7000);
+    }
+
+    public int getTeamsCount(){
+        return driver.findElements(By.xpath("//div[@class='_mtkwfAlvk6O3f']/../../..//li")).size();
+    }
+
+    public void clickXButton() {
+
+    }
 }

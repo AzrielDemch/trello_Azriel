@@ -1,20 +1,53 @@
 package com.trello.tests;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TeamCreationTest extends TestBase {
 
     @Test
-    public void testTeamCreation(){
-        isUserLoggedIn();
+    public void testTeamCreationFromPlusButtonOnHeader() throws InterruptedException {
+        int before = getTeamsCount();
+        clickOnPlusButtonOnHeader();
+        selectCreateTeamFromDropDown();
+        String teamName = "qa21";
+        fillTeamCreationForm(teamName,"QA_Testing");
+        clickContinueButton();
+        String createdTeamName = getTeamNameFromTeamPage();
+        returnToHomePage();
+        int after = getTeamsCount();
+        Assert.assertEquals(after,before+1);
+        Assert.assertEquals(createdTeamName.toLowerCase(),teamName.toLowerCase());
+
+        // Assert.assertTrue(isUserLoggedIn());
     }
 
-    public boolean isUserLoggedIn() {
-        return isElementPresent(By.name("board"));
+    @Test(enabled = false)
+    public void testTeamCreationFromLeftMenu() throws InterruptedException {
+        int before = getTeamsCount();
+        click(By.cssSelector(".icon-add icon-sm OiX3P2i2J92Xat"));
+        String teamName = "qa21";
+        fillTeamCreationForm(teamName,"QA_Testing");
+        clickContinueButton();
+        String createdTeamName = getTeamNameFromTeamPage();
+
+        returnToHomePage();
+
+        int after = getTeamsCount();
+        Assert.assertEquals(after,before+1);
+        Assert.assertEquals(createdTeamName.toLowerCase(),teamName.toLowerCase());
     }
 
-    public boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() > 0;
-    }
+
+    @Test(enabled=false)
+    public void testTeamCuncellCreationFromPlusButtonOnHeader() throws InterruptedException{
+        clickOnPlusButtonOnHeader();
+        selectCreateTeamFromDropDown();
+        String teamName = "qa21";
+        fillTeamCreationForm(teamName,"QA_Testing");
+        clickXButton();
+}
+
+
 }
