@@ -2,44 +2,48 @@ package com.trello.tests;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class BoardCreationTest extends TestBase {
+public class BoardCreationTest extends  TestBase {
 
-@Test
-public void testCreationBoard() throws InterruptedException {
-    int before = boardsCount();
-    clickOnBoardsButton();
-    createNewBoardButton();
-    addBoardTitleField();
-    clearField();
-    String boardName = "New Table 2";
-    typeTextInField(boardName);
-    choosePictureForNewBoard();
-    createNewBoardButton_2();
-    String createdBoardName = getBoardNameFromBoardPage();
-  //  isBoardIsCreated();
-    returnToHomePage();
-    int after = boardsCount();
-    Assert.assertEquals(after,before+1);
-    Assert.assertEquals(createdBoardName,boardName);
-}
-
-    private String getBoardNameFromBoardPage() {
-        return driver.findElement(By.cssSelector("[class='js-board-editing-target board-header-btn-text']")).getText();
+        @BeforeClass
+        public void ensurePreconditionLogin(){
+        if(!byPlusButton()){
+            login("bendercom111@gmail.com", "1S234567");
+        }
     }
 
-    private int boardsCount() {
-      return driver.findElements(By.xpath("//ul[@class='boards-page-board-section-list']//li")).size();
+        public boolean byPlusButton() {
+        return isElementPresent(By.cssSelector("[data-test-id='home-navigation-create-team-button']"));
     }
 
-  /*  public boolean isBoardIsCreated() {
-        return isElementInPage(By.cssSelector("[class='board-header-btn board-header-btn-without-icon board-header-btn-text js-add-board-to-team']"));
+        @BeforeMethod
+        public void isOnHomePage(){
+        if(!byTeamsCount()){
+           returnToHomePage();
+        }
+   }
+
+        public boolean byTeamsCount() {
+        return isElementPresent(By.xpath("//div[@class='_2zEdWKjwDvxZHR dG8NJxS20S4HJ2']/../..//li"));
     }
 
-    public boolean isElementInPage(By locator) {
-        return isElementPresent(locator);
-    } */
+    @Test
+    public void testBoardCreation() throws InterruptedException {
+        int beforeCreation = getPersonalBoardsCount();
+        clickOnPlusButtonOnHeader();
+        selectCreateBoardFromDropDown();
+        fillBoardCreationForm("qa21", "descr qa 21");
+        confirmBoardCreation();
+        returnToHomePage();
+
+        int afterCreation = getPersonalBoardsCount();
+
+        Assert.assertEquals(afterCreation, beforeCreation + 1);
+    }
+
 
 
 }

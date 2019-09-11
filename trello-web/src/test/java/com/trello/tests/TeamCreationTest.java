@@ -1,53 +1,80 @@
 package com.trello.tests;
 
+import net.bytebuddy.utility.JavaModule;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TeamCreationTest extends TestBase {
+public class TeamCreationTest extends  TestBase{
+    @BeforeClass
+    public void ensurePreconditionsLogin(){
+        if(!isUserLoggedIn()){
+            login("bendercom111@gmail.com", "1S234567");
+        }
+    }
+
+    @BeforeMethod
+    public void isOnHomePage(){
+        if(!isTherePersonalBoards()){
+            returnToHomePage();
+        }
+    }
+
+    public boolean isTherePersonalBoards() {
+        return isElementPresent(By.xpath("//*[@class='icon-lg icon-member']/../../.."));
+    }
 
     @Test
     public void testTeamCreationFromPlusButtonOnHeader() throws InterruptedException {
         int before = getTeamsCount();
         clickOnPlusButtonOnHeader();
         selectCreateTeamFromDropDown();
-        String teamName = "qa21";
-        fillTeamCreationForm(teamName,"QA_Testing");
+        String teamName = "qa21-"+ System.currentTimeMillis();
+        fillTeamCreationForm(teamName, "descr qa 21");
         clickContinueButton();
-        String createdTeamName = getTeamNameFromTeamPage();
+        //  String createdTeamName = getTeamNameFromTeamPage();
         returnToHomePage();
         int after = getTeamsCount();
-        Assert.assertEquals(after,before+1);
-        Assert.assertEquals(createdTeamName.toLowerCase(),teamName.toLowerCase());
-
-        // Assert.assertTrue(isUserLoggedIn());
+        Assert.assertEquals(after, before+1);
+        //  Assert.assertEquals(createdTeamName.toLowerCase(), teamName.toLowerCase());
     }
 
-    @Test(enabled = false)
-    public void testTeamCreationFromLeftMenu() throws InterruptedException {
+    @Test
+    public void testTeamCreationFromLeftNavMenu() throws InterruptedException {
         int before = getTeamsCount();
-        click(By.cssSelector(".icon-add icon-sm OiX3P2i2J92Xat"));
-        String teamName = "qa21";
-        fillTeamCreationForm(teamName,"QA_Testing");
+        clickOnPlusButtonOnLeftNavMenu();
+        fillTeamCreationForm("h", "g");
         clickContinueButton();
         String createdTeamName = getTeamNameFromTeamPage();
-
         returnToHomePage();
-
+        //  refreshPage();
         int after = getTeamsCount();
-        Assert.assertEquals(after,before+1);
-        Assert.assertEquals(createdTeamName.toLowerCase(),teamName.toLowerCase());
+
+        Assert.assertEquals(after, before+1);
+        Assert.assertEquals(createdTeamName, "h");
     }
 
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
+    public void clickOnPlusButtonOnLeftNavMenu() {
+        click(By.cssSelector(".icon-add.icon-sm"));
+    }
 
     @Test(enabled=false)
-    public void testTeamCuncellCreationFromPlusButtonOnHeader() throws InterruptedException{
+    public void testTeamCuncellCreationFromPlusButtonOnHeader(){
         clickOnPlusButtonOnHeader();
         selectCreateTeamFromDropDown();
-        String teamName = "qa21";
-        fillTeamCreationForm(teamName,"QA_Testing");
+        fillTeamCreationForm("qa21", "descr qa 21");
         clickXButton();
-}
+        //Assert
+
+
+        Assert.assertTrue(isUserLoggedIn());
+    }
 
 
 }

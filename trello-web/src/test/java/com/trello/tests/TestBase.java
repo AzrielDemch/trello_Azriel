@@ -2,30 +2,31 @@ package com.trello.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.util.concurrent.TimeUnit;
 
+
 public class TestBase {
-
     WebDriver driver;
-
     @BeforeClass
     public void setUp(){
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
         openSite("https://trello.com");
-        login("bendercom111@gmail.com","1S234567");
-
+        login("bendercom111@gmail.com", "1S234567");
     }
 
     public void login(String email, String password) {
         click(By.cssSelector("[href='/login']"));
-        type(By.cssSelector("[type=email]"),email);
+        type(By.cssSelector("[type=email]"), email);
         type(By.cssSelector("[type=password]"),password);
         click(By.id("login"));
     }
@@ -34,7 +35,7 @@ public class TestBase {
         driver.findElement(locator).click();
     }
 
-    public void type(By locator, String text) {
+    public void type(By locator, String text){
         driver.findElement(locator).click();
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(text);
@@ -49,54 +50,21 @@ public class TestBase {
         driver.quit();
     }
 
-    public void createNewBoardButton_2() {
-        click(By.cssSelector("[type='button']"));
-    }
-
-    public void choosePictureForNewBoard() {
-        driver.findElement(By.cssSelector("[style='background-image: url(\"https://images.unsplash.com/photo-1567788150222-c580695fa1d7?ixlib=rb-1.2" +
-                ".1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjcwNjZ9\");']")).click();
-    }
-
-    public void typeTextInField(String text) {
-        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).sendKeys(text);
-    }
-
-    public void clearField() {
-        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).clear();
-    }
-
-    public void addBoardTitleField() {
-        driver.findElement(By.cssSelector("._23NUW98LaZfBpQ")).click();
-    }
-
-    public void createNewBoardButton() {
-        driver.findElement(By.cssSelector("[data-test-id='header-boards-menu-create-board']")).click();
-    }
-
-    public void clickOnBoardsButton() {
-        driver.findElement(By.cssSelector("[class='MEu8ZECLGMLeab']")).click();
-    }
-
     public boolean isUserLoggedIn() {
-        return isElementPresent(By.name("board"));
+        return isElementPresent(By.cssSelector("[data-test-id='header-member-menu-button']"));
     }
 
     public boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() > 0;
+        return driver.findElements(locator).size()>0;
     }
 
     public void clickContinueButton() {
-        click(By.cssSelector("[type='submit']"));
+        click(By.cssSelector("[type=submit]"));
     }
 
     public void fillTeamCreationForm(String teamName, String description) {
-        driver.findElement(By.cssSelector("[data-test-id='header-create-team-name-input']")).click();
-        driver.findElement(By.cssSelector("[data-test-id='header-create-team-name-input']")).clear();
-        type(By.cssSelector("[data-test-id='header-create-team-name-input']"),teamName);
-        driver.findElement(By.cssSelector("textarea")).click();
-        driver.findElement(By.cssSelector("textarea")).clear();
-        type(By.cssSelector("textarea"),description);
+        type(By.cssSelector("[data-test-id='header-create-team-name-input']"), teamName);
+        type(By.cssSelector("textarea"), description);
     }
 
     public void selectCreateTeamFromDropDown() {
@@ -107,21 +75,52 @@ public class TestBase {
         click(By.cssSelector("[data-test-id='header-create-menu-button']"));
     }
 
-    public String getTeamNameFromTeamPage() {
+    public void fillBoardCreationForm(String boardName, String s) {
+        type(By.cssSelector("[data-test-id='header-create-board-title-input']"), boardName);
+
+        if(isElementPresent(By.cssSelector(".W6rMLOx8U0MrPx"))){
+            click(By.cssSelector(".W6rMLOx8U0MrPx"));
+            click(By.xpath("//nav[@class='SdlcRrTVPA8Y3K']//li[1]"));//no team
+        }
+
+    }
+
+    public void selectCreateBoardFromDropDown() {
+        click(By.cssSelector("[data-test-id='header-create-board-button']"));
+    }
+
+    public void confirmBoardCreation() {
+        click(By.cssSelector("[data-test-id='header-create-board-submit-button']"));
+    }
+
+    protected String getTeamNameFromTeamPage() {
+        new WebDriverWait(driver, 15)
+                .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h1")));
         return driver.findElement(By.cssSelector("h1")).getText();
     }
 
-    public void returnToHomePage() throws InterruptedException {
-        click(By.cssSelector("[href='/']"));
-        click(By.cssSelector("[href='/']"));
-        Thread.sleep(7000);
+    public void returnToHomePage() {
+        if(isElementPresent(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))){
+            new WebDriverWait(driver, 15)
+                    .until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))));
+            click(By.cssSelector("a[href='/']"));
+            click(By.cssSelector("a[href='/']"));
+        } else {
+            click(By.cssSelector("a[href='/']")); }
     }
 
-    public int getTeamsCount(){
-        return driver.findElements(By.xpath("//div[@class='_mtkwfAlvk6O3f']/../../..//li")).size();
+    public int getTeamsCount()  {
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//*[@class='_mtkwfAlvk6O3f']/../../..//li")));
+        return driver.findElements(By.xpath("//*[@class='_mtkwfAlvk6O3f']/../../..//li")).size();
     }
 
     public void clickXButton() {
 
+    }
+
+    public int getPersonalBoardsCount() {
+        return driver.findElements(By.xpath("//*[@class='icon-lg icon-member']/../../..//li")).size()-1;
     }
 }
