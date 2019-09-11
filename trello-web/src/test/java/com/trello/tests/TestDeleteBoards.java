@@ -1,3 +1,5 @@
+package com.trello.tests;
+
 import com.trello.tests.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedCondition;
