@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.trello.tests.BoardCreationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-11T18:18:08" hostname="DESKTOP-2U6TAT8" time="1.917">
+<testsuite name="com.trello.tests.BoardCreationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-14T14:15:38" hostname="DESKTOP-2U6TAT8" time="1.969">
   <properties/>
-  <testcase name="testBoardCreation" classname="com.trello.tests.BoardCreationTest" time="1.917"/>
+  <testcase name="testBoardCreation" classname="com.trello.tests.BoardCreationTest" time="1.969"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Starting ChromeDriver 76.0.3809.126 (d80a294506b4c9d18015e755cee48f953ddc3f2f-refs/branch-heads/3809@{#1024}) on port 17923
+  <system-err><![CDATA[Starting ChromeDriver 76.0.3809.126 (d80a294506b4c9d18015e755cee48f953ddc3f2f-refs/branch-heads/3809@{#1024}) on port 1891
 Only local connections are allowed.
 Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
-сен 11, 2019 9:17:58 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+сен 14, 2019 5:15:27 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: W3C
 ]]></system-err>
 </testsuite>

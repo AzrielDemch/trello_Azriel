@@ -11,35 +11,35 @@ public class BoardCreationTest extends  TestBase {
         @BeforeClass
         public void ensurePreconditionLogin(){
         if(!byPlusButton()){
-            login("bendercom111@gmail.com", "1S234567");
+            app.login("bendercom111@gmail.com", "1S234567");
         }
     }
 
         public boolean byPlusButton() {
-        return isElementPresent(By.cssSelector("[data-test-id='home-navigation-create-team-button']"));
+        return app.isElementPresent(By.cssSelector("[data-test-id='home-navigation-create-team-button']"));
     }
 
         @BeforeMethod
         public void isOnHomePage(){
         if(!byTeamsCount()){
-           returnToHomePage();
+           app.returnToHomePage();
         }
    }
 
         public boolean byTeamsCount() {
-        return isElementPresent(By.xpath("//div[@class='_2zEdWKjwDvxZHR dG8NJxS20S4HJ2']/../..//li"));
+        return app.isElementPresent(By.xpath("//div[@class='_2zEdWKjwDvxZHR dG8NJxS20S4HJ2']/../..//li"));
     }
 
     @Test
     public void testBoardCreation() throws InterruptedException {
-        int beforeCreation = getPersonalBoardsCount();
-        clickOnPlusButtonOnHeader();
-        selectCreateBoardFromDropDown();
-        fillBoardCreationForm("qa21", "descr qa 21");
-        confirmBoardCreation();
-        returnToHomePage();
+        int beforeCreation = app.getPersonalBoardsCount();
+        app.clickOnPlusButtonOnHeader();
+        app.selectCreateBoardFromDropDown();
+        app.fillBoardCreationForm("qa21", "descr qa 21");
+        app.confirmBoardCreation();
+        app.returnToHomePage();
 
-        int afterCreation = getPersonalBoardsCount();
+        int afterCreation = app.getPersonalBoardsCount();
 
         Assert.assertEquals(afterCreation, beforeCreation + 1);
     }
