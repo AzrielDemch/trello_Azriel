@@ -3,8 +3,10 @@
 <suite name="Suite1" verbose="1" >
     <test name="RegressionTrello">
         <classes>
-            <class name="com.trello.tests.TeamCreationTest"/>
-            <class name="com.trello.tests.TestDeleteTeams"/>
+            <class name="com.trello.tests.tests.BoardModificationTests"/>
+            <class name="com.trello.tests.tests.TeamModificationTests"/>
+            <class name="com.trello.tests.tests.TeamCreationTest"/>
+            <class name="com.trello.tests.tests.TestDeleteTeams"/>
         </classes>
     </test>
 </suite>
