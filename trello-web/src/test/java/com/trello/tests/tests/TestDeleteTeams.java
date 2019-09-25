@@ -1,9 +1,17 @@
 package com.trello.tests.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestDeleteTeams extends TestBase {
+
+    @BeforeMethod
+    public void preconditions(){
+        if(!app.getBoardHelper().isBoardPresent()){
+            app.getBoardHelper().createNewBoard();
+        }
+    }
 
     @Test
     public void deleteTeamsFromPage() throws InterruptedException {

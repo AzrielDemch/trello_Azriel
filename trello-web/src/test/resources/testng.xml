@@ -4,9 +4,8 @@
     <test name="RegressionTrello">
         <classes>
             <class name="com.trello.tests.tests.BoardModificationTests"/>
-            <class name="com.trello.tests.tests.TeamModificationTests"/>
-            <class name="com.trello.tests.tests.TeamCreationTest"/>
-            <class name="com.trello.tests.tests.TestDeleteTeams"/>
+            <class name="com.trello.tests.tests.TestDeleteBoards"/>
+            <class name="com.trello.tests.tests.BoardCreationTest"/>
         </classes>
     </test>
 </suite>

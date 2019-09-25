@@ -10,8 +10,8 @@ public class BoardHelper extends HelperBase{
         super(driver);
     }
 
-    public void fillBoardCreationForm(String boardName, String s) {
-        type(By.cssSelector("[data-test-id='header-create-board-title-input']"), boardName);
+    public void fillBoardCreationForm(BoardData board) {
+        type(By.cssSelector("[data-test-id='header-create-board-title-input']"), board.getBoardName());
 
         if(isElementPresent(By.cssSelector(".W6rMLOx8U0MrPx"))){
             click(By.cssSelector(".W6rMLOx8U0MrPx"));
@@ -58,10 +58,7 @@ public class BoardHelper extends HelperBase{
     }
 
     public void nameBoardField(String name) {
-        click(By.cssSelector("[class='board-header-btn mod-board-name inline-rename-board js-rename-board']"));
-        click(By.xpath("[class='board-name-input js-board-name-input']"));
         clear(By.xpath("[class='board-name-input js-board-name-input']"));
-        type(By.xpath("[class='board-name-input js-board-name-input']"),name);
     }
 
     public void clear(By locator) {
@@ -70,7 +67,7 @@ public class BoardHelper extends HelperBase{
 
     public void createInvite(String email,String description){
         click(By.cssSelector("[title^='Invite To Board']"));
-        type(By.cssSelector("[placeholder='Email address or name']"),email);
+        type(By.cssSelector(".autocomplete-input"),email);
         click(By.cssSelector("[class='invitation-message-input js-invitation-message']"));
         clear(By.cssSelector("[class='invitation-message-input js-invitation-message']"));
         type(By.cssSelector("[class='invitation-message-input js-invitation-message']"),description);
@@ -91,8 +88,29 @@ public class BoardHelper extends HelperBase{
             click(By.cssSelector("[class='board-menu-navigation-item-link js-change-background']"));
             click(By.xpath("//div[@class='board-backgrounds-section-tiles u-clearfix']//div//div[1]"));
             click(By.xpath("//div[@class='photo-attribution-component large']"));
-
         }
     }
 
+    public void changeBoardName(String newName) {
+        driver.findElement(By.cssSelector(".js-rename-board")).click();
+        driver.findElement(By.cssSelector("input.js-board-name-input")).sendKeys(newName);
+    }
+
+    public boolean getBoardNameFromPage(String newName){
+        return driver.findElement(By.cssSelector("[class='js-board-editing-target board-header-btn-text']")).getText().equals(newName);
+    }
+
+    public boolean isBoardPresent() {
+        return getPersonalBoardsCount() > 0;
+    }
+
+    public void createNewBoard() {
+        clickOnPlusButtonOnHeader();
+        selectCreateBoardFromDropDown();
+        fillBoardCreationForm(new BoardData()
+                .withBoardName("QA_21")
+                .withS("QA_21 Descr"));
+        confirmBoardCreation();
+        returnToHomePage();
+    }
 }

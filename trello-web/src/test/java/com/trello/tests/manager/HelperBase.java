@@ -34,9 +34,11 @@ public class HelperBase {
     }
 
     public void type(By locator, String text){
-        driver.findElement(locator).click();
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(text);
+        if(text != null){
+            driver.findElement(locator).click();
+            driver.findElement(locator).clear();
+            driver.findElement(locator).sendKeys(text);
+        }
     }
 
     public void refreshPage() {
@@ -48,13 +50,14 @@ public class HelperBase {
     }
 
     public void returnToHomePage() {
-        if(isElementPresent(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))){
+        if (isElementPresent(By.cssSelector("._2ZNy4w8Nfa58d1._2ZNy4w8Nfa58d1._1WD42rQsKIT-I6"))) {
             new WebDriverWait(driver, 20)
-                    .until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))));
+                    .until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("._2ZNy4w8Nfa58d1._2ZNy4w8Nfa58d1._1WD42rQsKIT-I6"))));
             click(By.cssSelector("a[href='/']"));
             click(By.cssSelector("a[href='/']"));
-        } else {
-            waitForElementAndClick(By.cssSelector("a[href='/']"),15); }
+        } else
+            waitForElementAndClick(By.cssSelector("a[href='/']"), 15);
+
     }
 
 }
