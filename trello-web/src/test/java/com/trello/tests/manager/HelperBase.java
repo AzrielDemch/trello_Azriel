@@ -50,9 +50,9 @@ public class HelperBase {
     }
 
     public void returnToHomePage() {
-        if (isElementPresent(By.cssSelector("._2ZNy4w8Nfa58d1._2ZNy4w8Nfa58d1._1WD42rQsKIT-I6"))) {
+        if (isElementPresent(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))) {
             new WebDriverWait(driver, 20)
-                    .until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("._2ZNy4w8Nfa58d1._2ZNy4w8Nfa58d1._1WD42rQsKIT-I6"))));
+                    .until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("._3gUubwRZDWaOF0._2WhIqhRFBTG7Ry._2NubQcQM83YCVV"))));
             click(By.cssSelector("a[href='/']"));
             click(By.cssSelector("a[href='/']"));
         } else
